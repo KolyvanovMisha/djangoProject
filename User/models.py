@@ -48,13 +48,6 @@ class User(AbstractUser):
     def is_moderator(self):
         return self.is_admin or self.role == self.Role.MODERATOR
 
-    def get_payload(self):
-        return {
-            'user_id': self.id,
-            'email': self.email,
-            'username': self.username,
-        }
-
     class Meta:
         ordering = ('username',)
         verbose_name = 'User'
