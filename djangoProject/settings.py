@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+
+
 from pathlib import Path
 import mongoengine
-mongoengine.connect(db='testbd', host='mongodb0.example.com', username='m.kolyvanov@radugamarket.shop', password='12344123')
+
+mongoengine.connect(db='djangoProject', host='mongodb0.example.com', username='m.kolyvanov@radugamarket.shop', password='12344123')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,8 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'mongoengine.django.mongo_auth',
     'task'
 ]
+
+# AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,6 +83,13 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
+DATABASES = {
+    'default':  {
+        'ENGINE':  'django.db.backends.dummy'
+    }
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -87,6 +100,10 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+
+# AUTHENTICATION_BACKENDS = (
+#     'mongoengine.django.auth.MongoEngineBackend',
+# )
 
 AUTH_PASSWORD_VALIDATORS = [
     {
