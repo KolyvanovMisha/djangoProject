@@ -78,9 +78,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'djangoProject',
-        'CLIENT': {
-           'host': '127.0.0.1',  # возможно host 27017
-        }
+        # 'CLIENT': {
+        #    'host': '127.0.0.1',  # возможно host 27017
+        # }
     }
 }
 
