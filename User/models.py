@@ -1,76 +1,61 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from django.db import models
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser, PermissionsMixin
-)
 
+class User(AbstractUser):
+    """
+    Модель Юзера
+    """
 
-class MyUserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    class Role(models.TextChoices):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Роли
         """
-        if not email:
-            raise ValueError('Users must have an email address')
+        USER = 'user'
+        MODERATOR = 'moderator'
+        ADMIN = 'admin'
 
-        user = self.model(
-            email=self.normalize_email(email),
-        )
-
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email, password=None):
-        """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
-        """
-        user = self.create_user(
-            email,
-            password=password,
-        )
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
-
-
-class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
-        verbose_name='email address',
-        max_length=255,
-        unique=True,
+        verbose_name='Почта',
+        unique=True
     )
-    is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
-
-    objects = MyUserManager()
-
-    USERNAME_FIELD = 'email'
-
-    def __str__(self):
-        return self.email
-
-    def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
-        return True
-
-    def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
-        return True
+    role = models.CharField(
+        verbose_name='Роль',
+        max_length=30,
+        choices=Role.choices,
+        default=Role.USER
+    )
+    bio = models.TextField(
+        verbose_name='О себе',
+        null=True
+    )
+    first_name = models.CharField(
+        verbose_name='Имя',
+        max_length=30,
+        null=True
+    )
+    last_name = models.CharField(
+        verbose_name='Фамилия',
+        max_length=40,
+        null=True
+    )
 
     @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
-        return self.is_superuser
+    def is_admin(self):
+        return self.role == self.Role.ADMIN or self.is_superuser
+
+    @property
+    def is_moderator(self):
+        return self.is_admin or self.role == self.Role.MODERATOR
+
+    def get_payload(self):
+        return {
+            'user_id': self.id,
+            'email': self.email,
+            'username': self.username,
+        }
 
     class Meta:
-        permissions = (
-            ('can_approve_dish', "Can approve Dish publication"),
-            ('can_delete_dish', "Can Delete Dish")
-        )
+        ordering = ('username',)
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'

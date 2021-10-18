@@ -27,18 +27,20 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'User.User'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'djongo',
+    'User',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djongo',
-    'User',
+
 ]
 
 MIDDLEWARE = [
