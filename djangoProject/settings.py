@@ -15,7 +15,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import mongoengine
 
-mongoengine.connect(db='djangoProject', host='mongodb0.example.com', username='m.kolyvanov@radugamarket.shop', password='12344123')
+mongoengine.connect(db='djangoProject2', host='localhost', username='', password='')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,18 +84,25 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-DATABASES = {
-    'default':  {
-        'ENGINE':  'django.db.backends.dummy'
-    }
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#     'default':  {
+#         'ENGINE':  'django.db.backends.dummy'
 #     }
 # }
+
+# DATABASES = {
+#    'default': {
+#       'ENGINE': 'django_mongodb_engine',
+#       'NAME': 'djangoProject2'
+#    }
+# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation

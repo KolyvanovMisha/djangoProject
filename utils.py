@@ -1,13 +1,13 @@
 from pymongo import MongoClient
 
 
-def get_db_handle(djangoProject, host, port, username, password):
-    client = MongoClient(host='mongodb0.example.com',
+def get_db_handle(djangoProject2, host, port, username, password):
+    client = MongoClient(host='localhost',
                          port=21017,
-                         username='m.kolyvanov@radugamarket.shop',
-                         password=1234
+                         username='',
+                         password=''
                          )
-    db_handle = client[djangoProject]
+    db_handle = client[djangoProject2]
     return db_handle, client
 
 
