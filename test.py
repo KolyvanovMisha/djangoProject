@@ -21,10 +21,10 @@ collection = db.users
 
 start = time.time()
 users = db.users
-user_count = 10 ** 6
+user_count = 10 ** 6 * 2
 for i in range(user_count):
     user = {
-        "author": generate_random_string(8),
+        "author": 'Anton',
         "email": 'mail' + str(i) + '@mail.ru',
         "date": datetime.datetime.utcnow(),
         "adress": {
@@ -34,12 +34,11 @@ for i in range(user_count):
     }
     users.insert_one(user)
 
-print('Время для заполнения {} пользователей: {:.2f} секунд'.format(user_count, time.time() - start))
+# print('Время для заполнения {} пользователей: {:.2f} секунд'.format(user_count, time.time() - start))
 
-start = time.time()
+# start = time.time()
 # pprint.pprint(users.find_one({"email": "mail999999@mail.ru"}))
-pprint.pprint(users.find_one({"author": ""
-                                        "bsjxdaws"}))
-print('Время для чтения {} пользователей: {:.2f} секунд'.format(user_count, time.time() - start))
+
+# print('Время для чтения {} пользователей: {:.2f} секунд'.format(user_count, time.time() - start))
 
 # users.delete_many({"author": "Mike"})
